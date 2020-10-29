@@ -43,11 +43,6 @@ cat<<-EOF
 		</tr>
 EOF
 
-# -- hostip=$(hostname -i)
-# -- netmask=$(ifconfig eth0 | awk '/inet addr/ { print substr($4, 6) }')
-# -- eval $(ipcalc -n $hostip $netmask) # evaluate NETWORK
-# -- def_ip="$NETWORK/$netmask"
-
 cnt=0
 if test -e $CONFX; then
 
@@ -59,11 +54,11 @@ if test -e $CONFX; then
 	    cnt=$((cnt+1))
         fi 
 
-        echo "$var" | grep -q "^#" 2> /dev/null && continue
-        echo "$var" | grep -q "^\[generic]" 2> /dev/null && continue
-        echo "$var" | grep -q "\[.*\]" 2> /dev/null && expo=`echo $var |sed -e 's/\[\(.*\)\]/\1/'`
-        echo "$var" | grep -q "exportname"2> /dev/null  && dev=`echo $var |sed -e 's/exportname = \(.*\)/\1/'`
-        echo "$var" | grep -q "readonly" 2>/dev/null && mode=`echo $var |sed -e 's/readonly = \(.*\)/\1/'`
+        echo "$var" | grep  "^#" >/dev/null && continue
+        echo "$var" | grep  "^\[generic\]" > /dev/null && continue
+        echo "$var" | grep  "\[.*\]" > /dev/null && expo=`echo $var |sed -e 's/\[\(.*\)\]/\1/'`
+        echo "$var" | grep  "exportname" > /dev/null  && dev=`echo $var |sed -e 's/exportname = \(.*\)/\1/'`
+        echo "$var" | grep  "readonly" >/dev/null && mode=`echo $var |sed -e 's/readonly = \(.*\)/\1/'`
 
   done < $CONFX
 fi

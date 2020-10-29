@@ -28,14 +28,9 @@ if test -n "$Submit"; then
 		echo
 	done >> $CONFX
 
-        kill -HUP $(cat /var/run/crond.pid)
-
-	# -- if rcnfs status >& /dev/null; then
-	# -- 	res="$(exportfs -r 2>&1 )" # exportfs always return 0!
-	# -- 	if test -n "$res"; then
-	# -- 		msg "$res"
-	# -- 	fi
-	# -- fi
+	if rcnbd status >& /dev/null; then
+           kill -HUP $(cat /var/run/nbd-server.pid)
+	fi
 
 fi
 

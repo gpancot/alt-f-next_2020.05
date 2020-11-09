@@ -84,7 +84,10 @@ elif echo $board | grep -qE "DNS-320|DNS-325|DNS-327L"; then
 	# Tell PMU to turn back on after a power failure
 	# From http://jamie.lentin.co.uk/devices/dlink-dns325/userland-configuration/
 	if test $board = "DNS-320-Ax" -o $board = "DNS-325-Ax"; then
-		gpioset -b 0 37=1
+        echo 37 > /sys/class/gpio/export
+        echo out > /sys/class/gpio/gpio37/direction
+        echo 1 > /sys/class/gpio/gpio37/value
+        echo 37 > /sys/class/gpio/unexport
 	fi
 
 	# MAC is stored in /dev/mtd4, configure eth0
